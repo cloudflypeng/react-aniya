@@ -1,0 +1,21 @@
+{
+  "name": "react-aniya",
+  "version": "0.0.2",
+  "main": "dist/index.mjs",
+  "tsup": {
+    "entry": ["src/index.jsx"],
+    "splitting": false,
+    "sourcemap": true,
+    "clean": true
+  },
+  "scripts": {
+    "build": "npx tsup || npm link",
+    "link": "npm link"
+  },
+	"devDependencies": {
+		"tsup": "^6.1.2"
+	},
+  "peerDependencies": {
+    "react": ">=16.9.0"
+  }
+}
