@@ -28,13 +28,11 @@ const useScrollAnim = (options = {}) => {
   const [enhanceClass, setEnhanceClass] = useState([])
 
   const [active, setActive] = useState(false)
-  console.log('enhanceClass :>> ', enhanceClass);
-  console.log('style :>> ', style);
+
   // 动画根据active状态改变
   useEffect(() => {
     // if active
     if (active) {
-      console.log('set');
       setStyle(activeStyle)
       // add class
       setEnhanceClass([getOriginClassName(myref), play])
