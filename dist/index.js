@@ -21,19 +21,16 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // src/index.jsx
 var src_exports = {};
 __export(src_exports, {
-  default: () => src_default
+  useScrollAnim: () => useScroll_exports
 });
 module.exports = __toCommonJS(src_exports);
+
+// src/useScroll.jsx
+var useScroll_exports = {};
+__export(useScroll_exports, {
+  default: () => useScroll_default
+});
 var import_react = require("react");
-
-// src/utils.js
-var getOriginClassName = (ele) => {
-  console.log("retureclass :>> ", ele.current.getAttribute("class"));
-  return ele.current.getAttribute("class");
-};
-
-// src/index.jsx
-var defaultThreshold = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
 var noActiveStyle = {
   contentVisibility: "hidden"
 };
@@ -42,33 +39,30 @@ var activeStyle = {
 };
 var useScrollAnim = (options = {}) => {
   const {
-    threshold = defaultThreshold,
     at = 200,
-    play = "xs"
+    play = "xs",
+    triggerDm = null
   } = options;
-  const myref = (0, import_react.useRef)(null);
   const [style, setStyle] = (0, import_react.useState)(noActiveStyle);
   const [enhanceClass, setEnhanceClass] = (0, import_react.useState)([]);
   const [active, setActive] = (0, import_react.useState)(false);
-  console.log("enhanceClass :>> ", enhanceClass);
-  console.log("style :>> ", style);
   (0, import_react.useEffect)(() => {
     if (active) {
-      console.log("set");
       setStyle(activeStyle);
-      setEnhanceClass([getOriginClassName(myref), play]);
+      setEnhanceClass([play]);
       return;
     }
     setStyle(noActiveStyle);
-    setEnhanceClass([enhanceClass[0]]);
+    setEnhanceClass([]);
   }, [active]);
   const trigger = () => {
     setActive(true);
   };
   const scrollListener = (0, import_react.useCallback)(() => {
+    var _a;
     if (active)
       return;
-    const { top } = myref.current.getBoundingClientRect();
+    const { top } = (_a = triggerDm.current) == null ? void 0 : _a.getBoundingClientRect();
     if (top < at) {
       trigger();
     }
@@ -82,9 +76,6 @@ var useScrollAnim = (options = {}) => {
       window.removeEventListener("scroll", scrollListener);
     };
   });
-  if (!enhanceClass.length) {
-    return { ref: myref, style };
-  }
-  return { ref: myref, style, className: enhanceClass.join(" ") };
+  return { className: enhanceClass.join(" "), style, trigger };
 };
-var src_default = useScrollAnim;
+var useScroll_default = useScrollAnim;
